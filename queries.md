@@ -33,17 +33,31 @@ where orderdetails.orderid = '10251';
 ```
 
 ### Display the OrderID, CustomerName and the employee's LastName for every order. All columns should be labeled clearly. Displays 196 records.
-// not working right
 ```
 select
-	o.orderid,
-    c.customername,
-    od.quantity
+  *
 from orders as o
-left join customers as c
-left join orderdetails as od
+join customers as c on o.customerid = c.customerid
+join employees as e on o.employeeid = e.employeeid
 ```
 
 ### (Stretch)  Displays CategoryName and a new column called Count that shows how many products are in each category. Shows 9 records.
+```
+select 
+	count(categories.categoryname) as Count,
+	categoryname
+from categories
+left join products on categories.categoryid = products.categoryid
+group by categories.categoryname
+```
+
 
 ### (Stretch) Display OrderID and a  column called ItemCount that shows the total number of products placed on the order. Shows 196 records. 
+```
+select
+	orderid,
+    count(quantity) as ItemCount
+from orderdetails
+left join products on products.productid = orderdetails.productid
+group by orderid
+```
