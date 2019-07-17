@@ -13,8 +13,9 @@ function findById(id) {
 
 function findSteps(id) {
   // returns correctly ordered steps by given scheme
-  return db('schemes')
-    .leftJoin('steps', 'schemes.id', 'steps.scheme_id')
+  return db('steps')
+    .leftJoin('schemes', 'schemes.id', 'steps.scheme_id')
+    .where(id === 'steps.scheme_id')
     .orderBy('steps.step_number', "asc");
 }
 
@@ -29,7 +30,8 @@ function update(changes, id) {
   // updates scheme using specified id
   return db('schemes')
     .insert(changes)
-    .where({ id });
+    .where({ id })
+    .then(ids => findById(ids[0]));
 }
 
 function remove(id) {
