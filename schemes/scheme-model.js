@@ -26,9 +26,14 @@ function add(scheme) {
     .then(ids => findById(ids[0]));
 }
 
-// function addSteps(steps) {
-//   return db()
-// }
+function addStep(steps, id) {
+  return db('steps')
+    .insert({
+      step_number: steps.step_number,
+      instructions: steps.instructions,
+      scheme_id: id
+    });
+}
 
 function update(changes, id) {
   // updates scheme using specified id
@@ -50,6 +55,7 @@ module.exports = {
   findById,
   findSteps,
   add,
+  addStep,
   update,
   remove
 }
