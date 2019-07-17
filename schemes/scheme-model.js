@@ -13,9 +13,9 @@ function findById(id) {
 
 function findSteps(id) {
   // returns correctly ordered steps by given scheme
-  return db('steps')
-    .leftJoin('schemes', 'schemes.id', 'steps.scheme_id')
-    .where(id === 'steps.scheme_id')
+  return db('schemes')
+    .innerJoin('steps', 'schemes.id', 'steps.scheme_id')
+    .where('steps.scheme_id', id)
     .orderBy('steps.step_number', "asc");
 }
 
@@ -25,6 +25,10 @@ function add(scheme) {
     .insert(scheme)
     .then(ids => findById(ids[0]));
 }
+
+// function addSteps(steps) {
+//   return db()
+// }
 
 function update(changes, id) {
   // updates scheme using specified id
